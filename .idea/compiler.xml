@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+      </profile>
+      <profile name="Annotation profile for dtc-comment-project" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
+        </processorPath>
+        <module name="dtc-comment-api" />
+        <module name="dtc-comment-controller" />
+        <module name="dtc-comment-orm" />
+        <module name="dtc-comment-main" />
+        <module name="dtc-comment-service" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="dtc-comment" options="-parameters" />
+      <module name="dtc-comment-api" options="-parameters" />
+      <module name="dtc-comment-controller" options="-parameters" />
+      <module name="dtc-comment-main" options="-parameters" />
+      <module name="dtc-comment-orm" options="-parameters" />
+      <module name="dtc-comment-service" options="-parameters" />
+    </option>
+  </component>
+</project>
