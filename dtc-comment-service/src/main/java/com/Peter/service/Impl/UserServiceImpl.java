@@ -1,6 +1,7 @@
-package com.Peter.service;
+package com.Peter.service.Impl;
 
 import com.Peter.mapper.UserMapper;
+import com.Peter.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

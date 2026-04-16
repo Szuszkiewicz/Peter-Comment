@@ -1,5 +1,12 @@
 package com.Peter.Param;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 //增加评论，前端到后端
 public class AddCommentRequestParam {
     private String userId;//用户id

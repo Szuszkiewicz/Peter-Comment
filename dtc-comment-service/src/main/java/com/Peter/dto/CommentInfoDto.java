@@ -1,11 +1,10 @@
-package com.Peter.entity;
+package com.Peter.dto;
 
 import lombok.Data;
 
 import java.util.Date;
-
 @Data
-public class CommentEntity {
+public class CommentInfoDto {
     private Long id;
     private Long userId;
     private Integer module;

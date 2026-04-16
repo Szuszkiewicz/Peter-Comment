@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Peter.mapper.CommentMapper">
+   <insert id="addComment" parameterType="com.Peter.entity.CommentEntity">
+       insert into comment(
+         module,
+         user_id,
+         resource_id,
+         content,
+         status,
+         score,
+         like_num,
+         is_delete,
+         create_time,
+         update_time
+         )
+       values(
+     #{module},
+     #{userId},
+     #{resourceId},
+     #{content},
+     #{status},
+     #{score},
+     #{likeNum},
+     #{isDelete},
+     #{createTime},
+     #{updateTime}
+       )
+   </insert>
+</mapper>
