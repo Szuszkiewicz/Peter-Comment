@@ -8,6 +8,7 @@ import java.util.List;
 @Data
 public class CommentInfoEntity {
     private String userId;
+    private String userName;
     private String commentId;
     private Integer module;
     private String resourceId;
@@ -16,12 +17,12 @@ public class CommentInfoEntity {
     private String commentTime;//格式yyyy-MM-dd：HH:mm:ss
     private Integer likeNum;//点赞数
     private String avatar;
-    private String userName;
+    private String username;
     //回复数
     private Integer replyNum;
     //状态
     private Integer status;//0不置顶1置顶
     //子回复列表
-    private List<ReplyInfoEntity> list;
+    private List<ReplyInfoEntity> replyList;
 
 }

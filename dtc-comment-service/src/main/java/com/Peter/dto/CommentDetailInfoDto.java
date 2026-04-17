@@ -4,12 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-@Data
+import java.util.List;
+
+//入参
 @AllArgsConstructor
 @NoArgsConstructor
-//在 Controller 和 Service 之间传递评论信息
-public class CommentInfoDto {
+@Data
+public class CommentDetailInfoDto {
+    private Long total;
+    private List<CommentInfoDto> list;
     private Long id;
     private Long userId;
     private Integer module;
@@ -17,13 +20,10 @@ public class CommentInfoDto {
     private String content;
     private Integer status;
     private Integer score;
-    private Integer order;//排序方式1：最新2：最热3：最早
     private Integer likeNum;
     private Integer isDelete;
-    private Date createTime;
-    private Date updateTime;
-    private Integer pageNum;
-    private Integer pageSize;
+    private java.util.Date createTime;
+    private java.util.Date updateTime;
 
 
 }

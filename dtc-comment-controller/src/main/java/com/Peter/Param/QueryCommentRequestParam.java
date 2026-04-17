@@ -1,5 +1,12 @@
 package com.Peter.Param;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 //查询评论，前端到后端
 public class QueryCommentRequestParam {
     private String userId;//用户id
@@ -12,4 +19,5 @@ public class QueryCommentRequestParam {
     private Integer pageSize;//评论数量
     private Integer replyNum;//回复数量
     private Integer pageNum;//页数
+    private String orderBy;
 }
