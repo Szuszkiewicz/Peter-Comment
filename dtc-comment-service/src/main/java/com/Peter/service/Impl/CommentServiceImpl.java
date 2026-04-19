@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -26,7 +27,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public int addComment(CommentInfoDto dto) {
         try{
-            log.info("增加评论-service层-addComment-入参：{}", JSON.toJSONString(dto));
+            log.info("增加评论-service层-addComment-入参：{}", JSON.toJSONString(dto));//转化成JSON显示
             CommentEntity commentEntity = new CommentEntity();
             BeanUtils.copyProperties(dto, commentEntity);//dto转entity
             int count=commentMapper.addComment(commentEntity);
@@ -40,11 +41,21 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public int deleteComment(CommentInfoDto dto) {
+        //缺少参数信息校验
+        //改为逻辑删除
         try{
             log.info("删除评论：-service层-deleteComment-入参：{}", JSON.toJSONString(dto));
             CommentEntity commentEntity = new CommentEntity();
             BeanUtils.copyProperties(dto, commentEntity);//dto转entity
-            int count=commentMapper.deleteCommentById(commentEntity.getId());
+         //   int count=commentMapper.deleteCommentById(dto.getId());
+            CommentParam updateParam = new CommentParam();
+            updateParam.setId(dto.getId());
+            updateParam.setUserId(dto.getUserId());
+            updateParam.setModule(dto.getModule());
+            updateParam.setResourceId(dto.getResourceId());
+            updateParam.setIsDelete(dto.getIsDelete());
+            updateParam.setUpdateTime(new Date());
+            int count= commentMapper.updateCommentById(updateParam );
             log.info("删除评论：-service层-deleteComment-出参：{}", count);
             return count;
         }catch (Exception e){
@@ -95,7 +106,7 @@ public class CommentServiceImpl implements CommentService {
                 continue;
             }
             CommentDetailInfoDto target=new CommentDetailInfoDto();
-            BeanUtils.copyProperties(commentEntity, target);
+            BeanUtils.copyProperties(commentEntity, target);//复制，但不转换类型
             resultInfoDtos.add(target);
         }
         return resultInfoDtos;
@@ -103,7 +114,7 @@ public class CommentServiceImpl implements CommentService {
 
 
     private void checkParam(CommentInfoDto dto) {
-        Assert.isTrue(dto!= null,"参数不能为空");
+        Assert.isTrue(dto!= null,"参数不能为空");//如果不为空则继续执行
         Assert.isTrue(dto.getModule()!= null,"模块不能为空");
         Assert.isTrue(dto.getResourceId()!= null,"资源id不能为空");
        //补全分页信息
@@ -117,6 +128,7 @@ public class CommentServiceImpl implements CommentService {
      commentParam.setModule(dto.getModule());
      commentParam.setResourceId(dto.getResourceId());
      commentParam.setLimit(dto.getPageSize());
+     commentParam.setIsDelete(dto.getIsDelete());
      commentParam.setOffset(buildOffset(dto.getPageNum(), dto.getPageSize()));
      if(dto.getOrder()==null) {
          commentParam.setOrderBy("create_time");

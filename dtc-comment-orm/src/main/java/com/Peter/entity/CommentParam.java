@@ -4,6 +4,9 @@ import lombok.Data;
 
 import java.util.Date;
 //数据传输 - 用于传递评论数据 接收前端传来的筛选、分页、排序条件
+//包含查询相关字段 + 分页排序字段,包含分页内容
+//额外字段：limit（每页条数）、offset（偏移量）、orderBy（排序字段）、orderDirection（排序方向）
+//字段可以为 null，表示不作为查询条件
 @Data
 public class CommentParam {
     private Long id;//评论id

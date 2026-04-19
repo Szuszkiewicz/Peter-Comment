@@ -42,9 +42,30 @@
        )
    </insert>
 
-   <delete id="deleteCommentById" parameterType="java.lang.Long">
+    <delete id="deleteCommentById" parameterType="java.lang.Long">
       delete from comment where id=#{id}
-   </delete>
+    </delete>
+    <update id="updateCommentById" parameterType="com.Peter.entity.CommentParam">
+     update comment set is_delete=#{isDelete}
+      update comment set is_delete=#{isDelete},update_time=#{updateTime}
+        <where>
+           <if test="module != null">
+                and module= #{module}
+            </if>
+            <if test="resourceId != null">
+                and resource_id= #{resourceId}
+            </if>
+            <if test="userId!= null">
+                and user_id= #{userId}
+            </if>
+            <if test="id!=null">
+                and id= #{id}
+            </if>
+            <if test="isDelete!=null">
+                and is_delete= #{isDelete}
+            </if>
+        </where>
+    </update>
 
     <select id="queryCommentByParam" resultMap="CommentResultMap" parameterType="com.Peter.entity.CommentParam">
        select * from comment
@@ -59,9 +80,9 @@
                 and score=#{score}
             </if>
         </where>
-        <if test="orderBy!= null and orderBy!='">
+        <if test="orderBy!= null and orderBy!='' ">
             order by ${orderBy}
-            <if test="orderDirection!=null and orderDirection!='"> --不是空字符串
+            <if test="orderDirection!=null and orderDirection!='' "> --不是空字符串
                 ${orderDirection}
             </if>--按照排列方式逆序或顺序排列
         </if>
@@ -70,6 +91,9 @@
     <select id="countCommentCountByParam" resultType="java.lang.Integer"  parameterType="com.Peter.entity.CommentParam">
        select count(*) from comment
        <where>
+           <if test="isDelete!=null">
+               and is_delete= #{isDelete}
+           </if>
           <if test="module != null">
               and module=#{module}
           </if>

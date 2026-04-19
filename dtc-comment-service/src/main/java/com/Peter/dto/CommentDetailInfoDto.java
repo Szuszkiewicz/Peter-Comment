@@ -6,7 +6,10 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-//入参
+//代表一条完整的评论记录，用于返回给上层
+//包含评论的所有基础字段（id、userId、content、score 等）
+//没有分页和排序字段（pageNum、pageSize、order）
+//是数据库 CommentEntity 的直接映射对象
 @AllArgsConstructor
 @NoArgsConstructor
 @Data

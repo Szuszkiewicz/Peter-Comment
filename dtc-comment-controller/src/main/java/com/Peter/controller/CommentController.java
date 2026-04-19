@@ -4,6 +4,7 @@ import com.Peter.Param.*;
 import com.Peter.dto.CommentDetailInfoDto;
 import com.Peter.dto.CommentInfoDto;
 import com.Peter.dto.CommentResultInfoDto;
+import com.Peter.enums.CommentDeleteEnum;
 import com.Peter.service.CommentService;
 import com.Peter.utils.BaseResultUtils;
 import com.Peter.utils.DateUtils;
@@ -12,7 +13,9 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -30,13 +33,14 @@ public class CommentController {
     {
         try {
             log.info("增加评论-controller层-addComment-入参:{}", JSON.toJSONString(param));
+            checkParam(param);
             CommentInfoDto dto = buildCommentInfoDto(param);
             int count = commentService.addComment(dto);//影响的行数
             log.info("增加评论-controller层-addComment-出参：{}", count);
             return BaseResultUtils.generateSuccess(count>0);
         }catch (Exception e){
         log.error("增加评论-controller层-addComment-异常:", e);
-        return BaseResultUtils.generateError("增加评论异常");
+        return BaseResultUtils.generateError("增加评论异常:"+e.getMessage());
             }
         }
 
@@ -61,6 +65,8 @@ public class CommentController {
     {  
         try {
             log.info("删除评论-controller层-deleteComment-入参：{}", JSON.toJSONString(param));
+            //缺少参数校验，用户信息校验
+            checkDeleteCommentParam(param);
             CommentInfoDto dto = getCommentInfoDto(param);
             int count = commentService.deleteComment(dto);
             log.info("删除评论-controller层-deleteComment-出参：{}",count);
@@ -70,6 +76,15 @@ public class CommentController {
             return BaseResultUtils.generateError("删除评论异常");
         }
     }
+
+    private void checkDeleteCommentParam(DeleteCommentRequestParam param) {
+        Assert.isTrue(param!= null,"入参不能为空");
+        Assert.isTrue(org.apache.commons.lang3.StringUtils.isNotBlank(param.getUserId()),"用户id不能为空");
+        Assert.isTrue(org.apache.commons.lang3.StringUtils.isNotBlank(param.getCommentId()),"评论id不能为空");
+        Assert.isTrue(param.getModule()!=null,"模块不能为空");
+        Assert.isTrue(org.apache.commons.lang3.StringUtils.isNotBlank(param.getResourceId()),"资源id不能为空");
+    }
+
     private static @NonNull CommentInfoDto getCommentInfoDto(DeleteCommentRequestParam param) {
         CommentInfoDto dto = new CommentInfoDto();
         dto.setUserId(Long.valueOf(param.getUserId()));
@@ -77,6 +92,7 @@ public class CommentController {
         dto.setModule(param.getModule());
         dto.setResourceId(Long.valueOf(param.getResourceId()));
         dto.setUpdateTime(new Date());
+        dto.setIsDelete(CommentDeleteEnum.DELETE.getCode());
         return dto;
     }
 
@@ -95,18 +111,26 @@ public class CommentController {
             return BaseResultUtils.generateError("查询评论异常");
         }
     }
-   private CommentInfoDto buildCommentInfoDto(QueryCommentRequestParam param){
+    private void checkParam(AddCommentRequestParam  param){
+        Assert.isTrue(param!= null,"入参不能为空");
+        Assert.isTrue(org.apache.commons.lang3.StringUtils.isNotBlank(param.getUserId()),"用户id不能为空");//\t \n也不可以
+        Assert.isTrue(org.apache.commons.lang3.StringUtils.isNotBlank(param.getResourceId()),"资源id不能为空");
+        Assert.isTrue(param.getModule()!=null,"模块不能为空");
+        Assert.isTrue(org.apache.commons.lang3.StringUtils.isNotBlank(param.getContent()),"内容不能为空");
+    }
+    private CommentInfoDto buildCommentInfoDto(QueryCommentRequestParam param){
         if(param==null){
             return null;
         }
-       CommentInfoDto commentInfoDto=new CommentInfoDto();
-        commentInfoDto.setUserId( param.getUserId()!=null?Long.valueOf(param.getUserId()): null);
+        CommentInfoDto commentInfoDto=new CommentInfoDto();
+        commentInfoDto.setUserId(param.getUserId()!=null?Long.valueOf(param.getUserId()): null);
         commentInfoDto.setModule(param.getModule());
         commentInfoDto.setResourceId(param.getResourceId()!=null?Long.valueOf(param.getResourceId()): null);
         commentInfoDto.setScore(param.getScore());
         commentInfoDto.setOrder(param.getOrder());
         commentInfoDto.setPageNum(param.getPageNum());
         commentInfoDto.setPageSize(param.getPageSize());
+        commentInfoDto.setIsDelete(CommentDeleteEnum.NORMAL.getCode());
         return commentInfoDto;
    }
    private CommentResultParam buildResultParam(CommentResultInfoDto resultInfoDto){

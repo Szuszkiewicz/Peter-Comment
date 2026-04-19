@@ -9,6 +9,8 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 //在 Controller 和 Service 之间传递评论信息
+//作为查询入参：封装前端传来的查询条件和分页参数,包含分页信息
+//作为单条评论数据：在 Service 层内部传递单条评论的基础信息
 public class CommentInfoDto {
     private Long id;
     private Long userId;

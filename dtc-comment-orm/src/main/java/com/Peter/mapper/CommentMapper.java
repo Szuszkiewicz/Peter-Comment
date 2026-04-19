@@ -12,7 +12,9 @@ public interface CommentMapper {
   //添加评论
   int addComment(CommentEntity commentEntity);
   //删除评论
-  int deleteCommentById(Long Id);
+  int deleteCommentById(Long id);
+  //逻辑删除，修改评论
+  int updateCommentById(CommentParam commentParam);
   //查询评论
   List<CommentEntity> queryCommentByParam(CommentParam commentParam);
   //查询评论总数
