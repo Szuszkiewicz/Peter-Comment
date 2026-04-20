@@ -57,6 +57,7 @@ public class CommentServiceImpl implements CommentService {
             updateParam.setUpdateTime(new Date());
             int count= commentMapper.updateCommentById(updateParam );
             log.info("删除评论：-service层-deleteComment-出参：{}", count);
+
             return count;
         }catch (Exception e){
             log.error("删除评论：-service层-deleteComment-异常:", e);
@@ -130,6 +131,7 @@ public class CommentServiceImpl implements CommentService {
      commentParam.setLimit(dto.getPageSize());
      commentParam.setIsDelete(dto.getIsDelete());
      commentParam.setOffset(buildOffset(dto.getPageNum(), dto.getPageSize()));
+     commentParam.setIsDelete(dto.getIsDelete());
      if(dto.getOrder()==null) {
          commentParam.setOrderBy("create_time");
          commentParam.setOrderDirection("desc");

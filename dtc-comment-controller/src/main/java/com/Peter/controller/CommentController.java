@@ -70,6 +70,9 @@ public class CommentController {
             CommentInfoDto dto = getCommentInfoDto(param);
             int count = commentService.deleteComment(dto);
             log.info("删除评论-controller层-deleteComment-出参：{}",count);
+            if(count<=0){
+                return BaseResultUtils.generateError("删除评论失败");
+            }
             return BaseResultUtils.generateSuccess(count>0);
         }catch (Exception e){
             log.error("删除评论-controller层-deleteComment-异常:", e);
