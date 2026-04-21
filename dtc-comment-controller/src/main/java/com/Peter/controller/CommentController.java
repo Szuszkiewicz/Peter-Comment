@@ -80,7 +80,7 @@ public class CommentController {
         }
     }
 
-    private void checkDeleteCommentParam(DeleteCommentRequestParam param) {
+    private void checkDeleteCommentParam(@RequestBody DeleteCommentRequestParam param) {
         Assert.isTrue(param!= null,"入参不能为空");
         Assert.isTrue(org.apache.commons.lang3.StringUtils.isNotBlank(param.getUserId()),"用户id不能为空");
         Assert.isTrue(org.apache.commons.lang3.StringUtils.isNotBlank(param.getCommentId()),"评论id不能为空");

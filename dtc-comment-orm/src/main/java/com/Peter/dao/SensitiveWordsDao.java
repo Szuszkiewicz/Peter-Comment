@@ -5,8 +5,9 @@ import java.util.List;
 
 import com.Peter.entity.SensitiveWords;
 import com.Peter.entity.SensitiveWordsExample;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
+@Mapper
 public interface SensitiveWordsDao {
     long countByExample(SensitiveWordsExample example);
 
