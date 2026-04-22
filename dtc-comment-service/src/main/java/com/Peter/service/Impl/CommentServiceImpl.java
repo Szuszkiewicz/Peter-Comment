@@ -7,6 +7,7 @@ import com.Peter.entity.CommentEntity;
 import com.Peter.entity.CommentParam;
 import com.Peter.mapper.CommentMapper;
 import com.Peter.service.CommentService;
+import com.Peter.utils.DFAService;
 import com.alibaba.fastjson2.JSON;
 import io.jsonwebtoken.lang.Assert;
 import lombok.extern.slf4j.Slf4j;
@@ -24,12 +25,20 @@ import java.util.List;
 public class CommentServiceImpl implements CommentService {
     @Autowired
     CommentMapper commentMapper;
+    private static final char STAR='*';
+    @Autowired
+    private DFAService dfaService;
     @Override
     public int addComment(CommentInfoDto dto) {
         try{
             log.info("增加评论-service层-addComment-入参：{}", JSON.toJSONString(dto));//转化成JSON显示
             CommentEntity commentEntity = new CommentEntity();
             BeanUtils.copyProperties(dto, commentEntity);//dto转entity
+            //敏感词匹配
+            log.info("DFA过滤算法-过滤前：{}",commentEntity.getContent());
+            String filterContent =  dfaService.checkSensitiveWord(commentEntity.getContent(),STAR);
+            log.info("DFA过滤算法-过滤后：{}",filterContent);
+            commentEntity.setContent(filterContent);
             int count=commentMapper.addComment(commentEntity);
             log.info("增加评论-service层-addComment-出参：{}", count);
             return count;
