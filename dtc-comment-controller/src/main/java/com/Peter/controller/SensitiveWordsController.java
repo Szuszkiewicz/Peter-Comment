@@ -3,20 +3,21 @@ package com.Peter.controller;
 
 import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
+import cn.hutool.poi.excel.ExcelWriter;
 import com.Peter.Param.AddSensitiveWordParam;
 import com.Peter.Param.BaseResult;
 import com.Peter.dto.SensitiveWordsDto;
+import com.Peter.entity.SensitiveWordsExample;
 import com.Peter.service.SensitiveService;
 import com.Peter.utils.BaseResultUtils;
 import com.alibaba.fastjson2.JSON;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
@@ -85,7 +86,31 @@ public class SensitiveWordsController {
      *
      * 批量导出敏感词
      */
-    
+    @GetMapping(value = "/export")
+    public BaseResult<Boolean> exportWords(HttpServletResponse  response) {
+        try {
+            SensitiveWordsExample example=new SensitiveWordsExample();
+            example.setLimit(1000);
+            //查询数据
+            List<SensitiveWordsDto> sensitiveWordsDtos=sensitiveService.queryByParam(example);
+
+            ExcelWriter writer=ExcelUtil.getWriter();
+            writer.write(sensitiveWordsDtos,true);
+
+            response.setContentType("application/vnd.ms-excel;charset=utf-8");
+            response.setHeader("Content-Disposition","attachment;filename=sensitive_words.xlsx");
+
+            ServletOutputStream outputStream = response.getOutputStream();
+            writer.flush(outputStream,true);
+            writer.close();
+
+            return BaseResultUtils.generateSuccess(true);
+         } catch (Exception e) {
+            log.error("批量导出敏感词-controller-exportWords:异常:", e);
+            return BaseResultUtils.generateError("批量导出敏感词失败");
+        }
+
+    }
 
     /**
      * 参数校验
