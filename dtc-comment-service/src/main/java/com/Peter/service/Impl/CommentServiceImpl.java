@@ -104,6 +104,14 @@ public class CommentServiceImpl implements CommentService {
              return new CommentResultInfoDto();
          }
      }
+     @Override
+     public int addLikesCount(Long commentId){
+        return 0;
+     }
+     @Override
+     public int subtractLikesCount(Long commentId){
+        return 0;
+     }
          //构建结果集
     private List<CommentDetailInfoDto> buildResultList(List<CommentEntity> commentEntities) {
         if(CollectionUtils.isEmpty(commentEntities)){

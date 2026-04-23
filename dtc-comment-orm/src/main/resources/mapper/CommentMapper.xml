@@ -15,41 +15,41 @@
         <result property="updateTime"  column="update_time"/>
     </resultMap>
 
-   <insert id="addComment" parameterType="com.Peter.entity.CommentEntity">
-       insert into comment(
-         module,
-         user_id,
-         resource_id,
-         content,
-         status,
-         score,
-         like_num,
-         is_delete,
-         create_time,
-         update_time
-         )
-       values(
-     #{module},
-     #{userId},
-     #{resourceId},
-     #{content},
-     #{status},
-     #{score},
-     #{likeNum},
-     #{isDelete},
-     #{createTime},
-     #{updateTime}
-       )
-   </insert>
+    <insert id="addComment" parameterType="com.Peter.entity.CommentEntity">
+        insert into comment(
+            module,
+            user_id,
+            resource_id,
+            content,
+            status,
+            score,
+            like_num,
+            is_delete,
+            create_time,
+            update_time
+        )
+        values(
+                  #{module},
+                  #{userId},
+                  #{resourceId},
+                  #{content},
+                  #{status},
+                  #{score},
+                  #{likeNum},
+                  #{isDelete},
+                  #{createTime},
+                  #{updateTime}
+              )
+    </insert>
 
     <delete id="deleteCommentById" parameterType="java.lang.Long">
-      delete from comment where id=#{id}
+        delete from comment where id=#{id}
     </delete>
     <update id="updateCommentById" parameterType="com.Peter.entity.CommentParam">
-     update comment set is_delete=#{isDelete}
-      update comment set is_delete=#{isDelete},update_time=#{updateTime}
+        update comment set is_delete=#{isDelete}
+        update comment set is_delete=#{isDelete},update_time=#{updateTime}
         <where>
-           <if test="module != null">
+            <if test="module != null">
                 and module= #{module}
             </if>
             <if test="resourceId != null">
@@ -65,7 +65,7 @@
     </update>
 
     <select id="queryCommentByParam" resultMap="CommentResultMap" parameterType="com.Peter.entity.CommentParam">
-       select * from comment
+        select * from comment
         <where>
             <if test="module != null">
                 and module=#{module}
@@ -86,24 +86,29 @@
                 ${orderDirection}
             </if>--按照排列方式逆序或顺序排列
         </if>
-   </select>
+    </select>
 
     <select id="countCommentCountByParam" resultType="java.lang.Integer"  parameterType="com.Peter.entity.CommentParam">
-       select count(*) from comment
-       <where>
-           <if test="isDelete!=null">
-               and is_delete= #{isDelete}
-           </if>
-          <if test="module != null">
-              and module=#{module}
-          </if>
-          <if test="resourceId != null">
-               and resource_id=#{resourceId}
-          </if>
-           <if test="score != null">
-               and score=#{score}
-           </if>
+        select count(*) from comment
+        <where>
+            <if test="isDelete!=null">
+                and is_delete= #{isDelete}
+            </if>
+            <if test="module != null">
+                and module=#{module}
+            </if>
+            <if test="resourceId != null">
+                and resource_id=#{resourceId}
+            </if>
+            <if test="score != null">
+                and score=#{score}
+            </if>
 
-       </where>
-   </select>
+        </where>
+    </select>
+
+    <update id="updateLikeNum">
+        update comment set like_num = like_num + #{delta}
+        where id = #{commentId}
+    </update>
 </mapper>

@@ -31,4 +31,13 @@ public class BaseResultUtils {
         baseResult.setData( null);
         return baseResult;
     }
+    public static BaseResult success(){
+        BaseResult baseResult = new BaseResult<>();
+        baseResult.setCode(0);
+        baseResult.setSuccess(true);
+        baseResult.setMessage("操作成功");
+        return baseResult;
+    }
+
+
 }
