@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -45,6 +46,7 @@ public class LikesServiceImpl implements LikesService  {
             CommentLikes commentLike = new CommentLikes();
             commentLike.setUserId(likesInfoDto.getUserId());
             commentLike.setCommentId(likesInfoDto.getCommentId());
+            commentLike.setCreatedAt(new Date());
             int insert= commentLikesDao.insert(commentLike);
             if(insert>0){
                 commentMapper.updateLikeNum(likesInfoDto.getCommentId(), 1);

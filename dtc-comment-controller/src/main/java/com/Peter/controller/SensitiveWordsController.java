@@ -1,5 +1,8 @@
 package com.Peter.controller;
 
+
+import cn.hutool.poi.excel.ExcelReader;
+import cn.hutool.poi.excel.ExcelUtil;
 import com.Peter.Param.AddSensitiveWordParam;
 import com.Peter.Param.BaseResult;
 import com.Peter.dto.SensitiveWordsDto;
@@ -14,6 +17,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.InputStream;
+import java.util.List;
 
 //敏感词
 @Slf4j
@@ -42,6 +49,43 @@ public class SensitiveWordsController {
         }
 
     }
+    /**
+     * 批量导入敏感词
+     * * @param param
+     */
+    @RequestMapping(value = "/import")
+    public BaseResult<Boolean> importWords(@RequestBody MultipartFile file) {
+        try {
+            InputStream inputStream = file.getInputStream();
+            ExcelReader reader = ExcelUtil.getReader(inputStream);
+            List<List<Object>> list=reader.read(1);
+            /**
+             * List<List<Object>> 是二维列表
+             * 外层 List：每一行数据
+             * 内层 List：每行中的每个单元格
+             */
+            int total=0;
+            for(int i=0;i<list.size();i++){
+                List<Object> blocks=list.get(i);
+                SensitiveWordsDto sensitiveWordsDto=new SensitiveWordsDto();
+                sensitiveWordsDto.setWord(blocks.get(0).toString());
+                sensitiveWordsDto.setCategory(blocks.get(1).toString());
+               // todo 后续可以优化为批量插入
+                int count=sensitiveService.insert(sensitiveWordsDto);
+                total+=count;
+            }
+          log.info("批量导入敏感词-controller-importWords:插入敏感词数量:{}", total);
+          return BaseResultUtils.generateSuccess(total>0);
+        } catch (Exception e) {
+            log.error("批量导入敏感词-controller-importWords:异常:", e);
+            return BaseResultUtils.generateError("批量导入敏感词失败");
+        }
+    }
+    /**
+     *
+     * 批量导出敏感词
+     */
+    
 
     /**
      * 参数校验
