@@ -9,4 +9,10 @@ public class DateUtils {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         return simpleDateFormat.format(date);
     }
+    public static String getCurrentTimeStr(){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_FORMAT);
+
+        String format = simpleDateFormat.format(new Date());
+        return format;
+    }
 }
