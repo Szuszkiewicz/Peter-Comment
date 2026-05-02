@@ -5,7 +5,18 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/../peter-user/pom.xml" />
       </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/../peter-user/peter-user-api/pom.xml" />
+        <option value="$PROJECT_DIR$/../peter-user/peter-user-controller/pom.xml" />
+        <option value="$PROJECT_DIR$/../peter-user/peter-user-main/pom.xml" />
+        <option value="$PROJECT_DIR$/../peter-user/peter-user-orm/pom.xml" />
+        <option value="$PROJECT_DIR$/../peter-user/peter-user-service/pom.xml" />
+        <option value="$PROJECT_DIR$/../peter-user/pom.xml" />
+      </set>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" project-jdk-name="25" project-jdk-type="JavaSDK" />

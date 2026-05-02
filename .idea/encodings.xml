@@ -8,5 +8,10 @@
     <file url="file://$PROJECT_DIR$/dtc-comment-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../peter-user/peter-user-api/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../peter-user/peter-user-controller/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../peter-user/peter-user-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../peter-user/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../peter-user/src/main/resources" charset="UTF-8" />
   </component>
 </project>

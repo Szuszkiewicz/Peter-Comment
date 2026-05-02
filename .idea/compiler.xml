@@ -22,6 +22,14 @@
         <module name="dtc-comment-service" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="peter-user" target="1.5" />
+      <module name="peter-user-api" target="1.8" />
+      <module name="peter-user-controller" target="1.8" />
+      <module name="peter-user-main" target="1.8" />
+      <module name="peter-user-orm" target="1.8" />
+      <module name="peter-user-service" target="25" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
