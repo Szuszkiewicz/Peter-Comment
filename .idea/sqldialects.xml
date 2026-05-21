@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/c95b5bcc-2572-4c02-b724-071e7d3fc59e/console_1.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/dtc-comment-orm/src/main/resources/dao/CommentLikesDao.xml" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/dtc-comment-orm/src/main/resources/dao/SensitiveWordsDao.xml" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/dtc-comment-orm/src/main/resources/mapper/CommentMapper.xml" dialect="GenericSQL" />
+  </component>
+</project>
