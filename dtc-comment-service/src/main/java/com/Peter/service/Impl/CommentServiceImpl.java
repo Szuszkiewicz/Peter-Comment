@@ -3,10 +3,12 @@ package com.Peter.service.Impl;
 import com.Peter.dto.CommentDetailInfoDto;
 import com.Peter.dto.CommentInfoDto;
 import com.Peter.dto.CommentResultInfoDto;
+import com.Peter.dto.UserInfoDto;
 import com.Peter.entity.CommentEntity;
 import com.Peter.entity.CommentParam;
 import com.Peter.mapper.CommentMapper;
 import com.Peter.service.CommentService;
+import com.Peter.service.UserHttpService;
 import com.Peter.utils.DFAService;
 import com.alibaba.fastjson2.JSON;
 import io.jsonwebtoken.lang.Assert;
@@ -15,6 +17,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,6 +31,9 @@ public class CommentServiceImpl implements CommentService {
     private static final char STAR='*';
     @Autowired
     private DFAService dfaService;
+
+    @Autowired
+    private UserHttpService userHttpService;
     @Override
     public int addComment(CommentInfoDto dto) {
         try{
@@ -79,6 +85,8 @@ public class CommentServiceImpl implements CommentService {
          try {
              log.info("查询评论-service层-数据库-入参:{}", JSON.toJSONString(dto));
              CommentResultInfoDto resultInfoDto = new CommentResultInfoDto();
+             UserInfoDto userInfo= userHttpService.getUserInfo(7l);
+             log.info(userInfo.getUsername());
              //检查参数是否合理
              checkParam(dto);
              //构建查询条件，用户可能需要根据不同条件组合查询:
