@@ -15,7 +15,7 @@ public class UserHttpService {
         if(id == null){
             return null;
         }
-        BaseResult<UserInfoDto> userInfoDtoBaseResult = userFeignService.queryUserInfo(String.valueOf(id));
+        BaseResult<UserInfoDto> userInfoDtoBaseResult = userFeignService.queryUserInfoById(String.valueOf(id));
         if(!userInfoDtoBaseResult.getSuccess()){
             return null;
         }
