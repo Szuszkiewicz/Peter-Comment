@@ -23,6 +23,17 @@
         </dependency>
         <dependency>
             <groupId>com.Peter</groupId>
+            <artifactId>peter-user-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>4.3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.Peter</groupId>
             <artifactId>dtc-comment-service</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>

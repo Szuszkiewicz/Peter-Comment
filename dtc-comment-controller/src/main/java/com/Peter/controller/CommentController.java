@@ -10,6 +10,7 @@ import com.Peter.utils.BaseResultUtils;
 import com.Peter.utils.DateUtils;
 import com.alibaba.fastjson2.JSON;
 import lombok.Data;
+import com.Peter.utils.TokenUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,9 @@ public class CommentController {
         try {
             log.info("增加评论-controller层-addComment-入参:{}", JSON.toJSONString(param));
             checkParam(param);
-            CommentInfoDto dto = buildCommentInfoDto(param);
+            Long userId = TokenUtils.getUserId();
+            Assert.isTrue(userId!=null,"请先登录");
+            CommentInfoDto dto = buildCommentInfoDto(param, userId);
             int count = commentService.addComment(dto);//影响的行数
             log.info("增加评论-controller层-addComment-出参：{}", count);
             return BaseResultUtils.generateSuccess(count>0);
@@ -44,7 +47,7 @@ public class CommentController {
             }
         }
 
-    private static @NonNull CommentInfoDto buildCommentInfoDto(AddCommentRequestParam param) {
+    private static @NonNull CommentInfoDto buildCommentInfoDto(AddCommentRequestParam param, Long userId) {
         CommentInfoDto dto = new CommentInfoDto();
         dto.setUserId(Long.valueOf(param.getUserId()));
         dto.setModule(param.getModule());
@@ -116,7 +119,7 @@ public class CommentController {
     }
     private void checkParam(AddCommentRequestParam  param){
         Assert.isTrue(param!= null,"入参不能为空");
-        Assert.isTrue(org.apache.commons.lang3.StringUtils.isNotBlank(param.getUserId()),"用户id不能为空");//\t \n也不可以
+//        Assert.isTrue(org.apache.commons.lang3.StringUtils.isNotBlank(param.getUserId()),"用户id不能为空");//\t \n也不可以
         Assert.isTrue(org.apache.commons.lang3.StringUtils.isNotBlank(param.getResourceId()),"资源id不能为空");
         Assert.isTrue(param.getModule()!=null,"模块不能为空");
         Assert.isTrue(org.apache.commons.lang3.StringUtils.isNotBlank(param.getContent()),"内容不能为空");
